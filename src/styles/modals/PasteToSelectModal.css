@@ -1,0 +1,102 @@
+.paste-to-select-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-modal, 1000);
+  animation: fadeIn 0.2s ease-out;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  transition: opacity 0.2s ease;
+}
+
+.paste-to-select-modal {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  background-color: var(--background-secondary);
+  border-radius: var(--border-radius-lg);
+  width: 600px;
+  max-width: 90%;
+  padding: var(--space-lg);
+  border: var(--standard-border);
+  border-color: var(--color-primary);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.paste-to-select-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.paste-to-select-modal .modal-header h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.paste-to-select-modal .modal-content {
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+}
+
+.paste-to-select-modal .modal-content p {
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.paste-to-select-modal .modal-content textarea {
+  width: 100%;
+  padding: var(--space-sm);
+  border: var(--standard-border);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-sm);
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}
+
+.paste-to-select-modal .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+}
+
+.paste-to-select-modal .cancel-button {
+  background-color: var(--background-tertiary);
+  border-color: var(--border-color);
+}
+
+.paste-to-select-modal .cancel-button:hover {
+  background-color: var(--hover-color);
+}
+
+.paste-to-select-modal .confirm-button {
+  background-color: var(--color-primary);
+  color: var(--text-on-primary);
+  border-color: var(--color-primary);
+}
+
+.paste-to-select-modal .confirm-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Dark mode styles */
+.dark-mode .paste-to-select-modal {
+  background-color: var(--background-secondary);
+  border-color: var(--color-primary);
+  color: var(--text-primary);
+}
+
+.dark-mode .paste-to-select-modal .modal-content textarea {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}

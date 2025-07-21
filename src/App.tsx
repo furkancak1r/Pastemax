@@ -1,3 +1,4 @@
+// src/App.tsx
 /* ============================== IMPORTS ============================== */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import ConfirmUseFolderModal from './components/ConfirmUseFolderModal';
@@ -28,6 +29,7 @@ import CopyHistoryModal, { CopyHistoryItem } from './components/CopyHistoryModal
 import CopyHistoryButton from './components/CopyHistoryButton';
 import ModelDropdown from './components/ModelDropdown';
 import ToggleSwitch from './components/base/ToggleSwitch';
+import PasteToSelectModal from './components/PasteToSelectModal';
 
 /**
  * Import path utilities for handling file paths across different operating systems.
@@ -166,6 +168,7 @@ const App = (): JSX.Element => {
   const [isSafeMode, setIsSafeMode] = useState(false);
   const [selectedTaskType, setSelectedTaskType] = useState('');
   const [isCustomTaskTypeModalOpen, setIsCustomTaskTypeModalOpen] = useState(false);
+  const [isPasteToSelectModalOpen, setIsPasteToSelectModalOpen] = useState(false);
 
   /* ============================== STATE: User Instructions ============================== */
   const [userInstructions, setUserInstructions] = useState('');
@@ -648,6 +651,35 @@ const App = (): JSX.Element => {
   }, [isElectron]);
 
   /* ============================== HANDLERS & UTILITIES ============================== */
+
+  const handleSelectFromPaste = (pastedText: string) => {
+    if (!selectedFolder) {
+      console.warn('Cannot select files from paste: no folder selected.');
+      return;
+    }
+
+    const lines = pastedText.split('\n').map((line) => line.trim());
+    const relativePaths = lines
+      .filter((line) => line.startsWith('#'))
+      .map((line) => line.substring(1).trim());
+
+    if (relativePaths.length === 0) {
+      return;
+    }
+
+    const absolutePathsToSelect = new Set(
+      relativePaths.map((relativePath) => normalizePath(join(selectedFolder, relativePath)))
+    );
+
+    const validPaths = allFiles
+      .map((file) => normalizePath(file.path))
+      .filter((path) => absolutePathsToSelect.has(path));
+
+    setSelectedFiles((prevSelected) => {
+      const newSelected = new Set([...prevSelected, ...validPaths]);
+      return Array.from(newSelected);
+    });
+  };
 
   /**
    * Handles closing the ignore patterns viewer and conditionally reloading the app
@@ -1663,6 +1695,7 @@ const App = (): JSX.Element => {
               currentWorkspaceName={currentWorkspaceName}
               collapseAllFolders={collapseAllFolders}
               expandAllFolders={expandAllFolders}
+              onOpenPasteToSelectModal={() => setIsPasteToSelectModalOpen(true)}
             />
           ) : (
             <div className="sidebar" style={{ width: '300px' }}>
@@ -1893,6 +1926,11 @@ const App = (): JSX.Element => {
           onDecline={handleDeclineUseCurrentFolder}
           workspaceName={confirmFolderModalDetails.workspaceName}
           folderPath={confirmFolderModalDetails.folderPath}
+        />
+        <PasteToSelectModal
+          isOpen={isPasteToSelectModalOpen}
+          onClose={() => setIsPasteToSelectModalOpen(false)}
+          onSelect={handleSelectFromPaste}
         />
       </div>
     </ThemeProvider>
