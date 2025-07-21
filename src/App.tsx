@@ -1,4 +1,4 @@
-// src/App.tsx
+      // src/App.tsx
 /* ============================== IMPORTS ============================== */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import ConfirmUseFolderModal from './components/ConfirmUseFolderModal';
@@ -35,7 +35,14 @@ import PasteToSelectModal from './components/PasteToSelectModal';
  * Import path utilities for handling file paths across different operating systems.
  * While not all utilities are used directly, they're kept for consistency and future use.
  */
-import { normalizePath, arePathsEqual, isSubPath, join, dirname } from './utils/pathUtils';
+import {
+  normalizePath,
+  arePathsEqual,
+  isSubPath,
+  join,
+  dirname,
+  isAbsolute,
+} from './utils/pathUtils';
 
 /**
  * Import utility functions for content formatting and language detection.
@@ -659,24 +666,36 @@ const App = (): JSX.Element => {
     }
 
     const lines = pastedText.split('\n').map((line) => line.trim());
-    const relativePaths = lines
+    const pathsToProcess = lines
       .filter((line) => line.startsWith('#'))
-      .map((line) => line.substring(1).trim());
+      .map((line) => line.substring(1).trim())
+      .filter(Boolean); // Make sure we don't have empty strings
 
-    if (relativePaths.length === 0) {
+    if (pathsToProcess.length === 0) {
       return;
     }
 
-    const absolutePathsToSelect = new Set(
-      relativePaths.map((relativePath) => normalizePath(join(selectedFolder, relativePath)))
-    );
+    const absolutePathsToSelect = pathsToProcess.map((p) => {
+      if (isAbsolute(p)) {
+        return normalizePath(p);
+      }
+      return normalizePath(join(selectedFolder, p));
+    });
 
     const validPaths = allFiles
       .map((file) => normalizePath(file.path))
-      .filter((path) => absolutePathsToSelect.has(path));
+      .filter((path) => {
+        for (const pathToSelect of absolutePathsToSelect) {
+          if (arePathsEqual(path, pathToSelect)) {
+            return true;
+          }
+        }
+        return false;
+      });
 
     setSelectedFiles((prevSelected) => {
-      const newSelected = new Set([...prevSelected, ...validPaths]);
+      // Normalize paths in prevSelected as well for Set uniqueness
+      const newSelected = new Set([...prevSelected.map(normalizePath), ...validPaths]);
       return Array.from(newSelected);
     });
   };
@@ -782,7 +801,9 @@ const App = (): JSX.Element => {
     setAllFiles((prevFiles: FileData[]) => {
       const isDuplicate = prevFiles.some((f) => arePathsEqual(f.path, newFile.path));
       const newAllFiles = isDuplicate ? prevFiles : [...prevFiles, newFile];
-      console.log(`[IPC] file-added: Previous count: ${prevFiles.length}, New count: ${newAllFiles.length}, Path: ${newFile.path}`);
+      console.log(
+        `[IPC] file-added: Previous count: ${prevFiles.length}, New count: ${newAllFiles.length}, Path: ${newFile.path}`
+      );
       return newAllFiles;
     });
   }, []);
@@ -790,10 +811,12 @@ const App = (): JSX.Element => {
   const handleFileUpdated = useCallback((updatedFile: FileData) => {
     console.log('[IPC] Received file-updated:', updatedFile);
     setAllFiles((prevFiles: FileData[]) => {
-      const newAllFiles = prevFiles.map((file) => 
+      const newAllFiles = prevFiles.map((file) =>
         arePathsEqual(file.path, updatedFile.path) ? updatedFile : file
       );
-      console.log(`[IPC] file-updated: Count remains: ${newAllFiles.length}, Updated path: ${updatedFile.path}`);
+      console.log(
+        `[IPC] file-updated: Count remains: ${newAllFiles.length}, Updated path: ${updatedFile.path}`
+      );
       return newAllFiles;
     });
   }, []);
@@ -803,17 +826,21 @@ const App = (): JSX.Element => {
       const path = typeof filePathData === 'object' ? filePathData.path : filePathData;
       const normalizedPath = normalizePath(path);
       console.log('[IPC] Received file-removed:', filePathData);
-      
+
       setAllFiles((prevFiles: FileData[]) => {
         const newAllFiles = prevFiles.filter((file) => !arePathsEqual(file.path, normalizedPath));
-        console.log(`[IPC] file-removed: Previous count: ${prevFiles.length}, New count: ${newAllFiles.length}, Removed path: ${normalizedPath}`);
+        console.log(
+          `[IPC] file-removed: Previous count: ${prevFiles.length}, New count: ${newAllFiles.length}, Removed path: ${normalizedPath}`
+        );
         return newAllFiles;
       });
-      
+
       setSelectedFiles((prevSelected: string[]) => {
         const newSelected = prevSelected.filter((p) => !arePathsEqual(p, normalizedPath));
         if (newSelected.length !== prevSelected.length) {
-          console.log(`[IPC] file-removed: Also removed from selectedFiles. Path: ${normalizedPath}`);
+          console.log(
+            `[IPC] file-removed: Also removed from selectedFiles. Path: ${normalizedPath}`
+          );
         }
         return newSelected;
       });
@@ -1631,7 +1658,11 @@ const App = (): JSX.Element => {
                 }}
               >
                 <button
-                  className={`header-action-btn check-updates-button${initialAutoUpdateResult?.isUpdateAvailable && !isUpdateModalOpen ? ' update-available' : ''}`}
+                  className={`header-action-btn check-updates-button${
+                    initialAutoUpdateResult?.isUpdateAvailable && !isUpdateModalOpen
+                      ? ' update-available'
+                      : ''
+                  }`}
                   title="Check for application updates"
                   onClick={handleCheckForUpdates}
                 >
@@ -1774,7 +1805,9 @@ const App = (): JSX.Element => {
                               key={option.value}
                               role="option"
                               aria-selected={option.value === sortOrder}
-                              className={`sort-option-item ${option.value === sortOrder ? 'selected' : ''}`}
+                              className={`sort-option-item ${
+                                option.value === sortOrder ? 'selected' : ''
+                              }`}
                             >
                               <button
                                 type="button"
@@ -1938,3 +1971,4 @@ const App = (): JSX.Element => {
 };
 
 export default App;
+    
