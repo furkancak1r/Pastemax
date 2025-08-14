@@ -1,0 +1,114 @@
+/* -------------------- User Instructions (in Content Area) -------------------- */
+.user-instructions-container {
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--background-primary);
+  flex-shrink: 0; /* Prevent shrinking */
+  position: relative; /* For resize handle positioning */
+}
+
+.user-instructions {
+  position: relative; /* Changed from absolute, for resize handle positioning */
+  max-width: 100%; /* Keep this to ensure it doesn't overflow its container's width */
+  /* width and height are set via inline styles by the component's JS */
+}
+
+.user-instructions textarea {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  border: var(--standard-border);
+  border-radius: 4px;
+  background-color: var(--background-secondary);
+  /*Slightlydifferentbackground*/
+  color: var(--text-primary);
+  font-family: var(--font-family-ui);
+  /*UseUIfont*/
+  font-size: 14px;
+  line-height: 1.5;
+  resize: none;
+  /*Disablebrowser's default resize, we'readdingcustomhandles*/
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background-color 0.2s;
+}
+
+.user-instructions textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+  outline: none;
+  background-color: var(--background-primary); /* Change background on focus */
+}
+
+.user-instructions textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+/* -------------------- User Instructions Resize Handles -------------------- */
+.instructions-resize-handle-vertical {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 6px;
+  cursor: ns-resize;
+  z-index: 10;
+  background-color: transparent;
+  will-change: transform;
+}
+
+.instructions-resize-handle-horizontal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 6px; /* Increased from 4px */
+  cursor: ew-resize;
+  z-index: 10;
+  background-color: transparent;
+  will-change: transform; /* Optimize for performance */
+}
+
+.instructions-resize-handle-corner {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  cursor: nesw-resize;
+  z-index: 11;
+  background-color: transparent;
+}
+
+.instructions-resize-handle-vertical:hover,
+.instructions-resize-handle-horizontal:hover,
+.instructions-resize-handle-corner:hover {
+  background-color: var(--color-primary);
+  opacity: 0.2;
+}
+
+.dark-mode .user-instructions-container {
+  border-color: var(--border-color);
+}
+.dark-mode .user-instructions textarea {
+  border-color: var(--border-color);
+}
+.dark-mode textarea::placeholder {
+  color: var(--text-disabled); /* Use disabled text color for placeholder */
+}
+.dark-mode .user-instructions-container {
+  background-color: var(--background-primary);
+  border-radius: 0; /* Remove if causing issues */
+}
+
+.dark-mode .user-instructions textarea {
+  background-color: var(--background-secondary);
+}
+
+/* Dark mode handlers */
+.dark-mode .instructions-resize-handle-vertical:hover,
+.dark-mode .instructions-resize-handle-horizontal:hover,
+.dark-mode .instructions-resize-handle-corner:hover {
+  background-color: var(--color-primary);
+  opacity: 0.4;
+}

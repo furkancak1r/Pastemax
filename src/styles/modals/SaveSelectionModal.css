@@ -1,0 +1,86 @@
+.save-selection-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-modal, 1000);
+  animation: fadeIn 0.2s ease-out;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  transition: opacity 0.2s ease;
+}
+
+.save-selection-modal {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  background-color: var(--background-secondary);
+  border-radius: var(--border-radius-lg);
+  width: 500px;
+  max-width: 90%;
+  padding: var(--space-lg);
+  border: var(--standard-border);
+  border-color: var(--color-primary);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.save-selection-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.save-selection-modal .modal-header h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.save-selection-modal .modal-content {
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+}
+
+.save-selection-modal .modal-content p {
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.save-selection-modal .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+}
+
+.save-selection-modal .cancel-button {
+  background-color: var(--background-tertiary);
+  border-color: var(--border-color);
+}
+
+.save-selection-modal .cancel-button:hover {
+  background-color: var(--hover-color);
+}
+
+.save-selection-modal .confirm-button {
+  background-color: var(--color-primary);
+  color: var(--text-on-primary);
+  border-color: var(--color-primary);
+}
+
+.save-selection-modal .confirm-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Dark mode styles */
+.dark-mode .save-selection-modal {
+  background-color: var(--background-secondary);
+  border-color: var(--color-primary);
+  color: var(--text-primary);
+}
+  

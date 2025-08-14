@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Copy History Button Styles
+   ========================================================================== */
+
+.copy-history-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--background-primary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+  border-radius: var(--space-sm);
+  cursor: pointer;
+  height: 50px;
+}
+
+.copy-history-button:hover {
+  background-color: var(--background-secondary);
+  border-color: var(--color-primary);
+  color: var(--text-primary);
+}
+
+/* Position next to the copy button */
+.copy-history-button-position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-history-button-position:hover {
+  background-color: var(--background-secondary);
+  color: var(--text-primary-dark);
+}
+
+/* Dark mode styles */
+.dark-mode .copy-history-button {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark-mode .copy-history-button:hover {
+  border-color: var(--color-primary);
+  background-color: var(--background-secondary);
+  color: var(--text-primary-dark);
+}

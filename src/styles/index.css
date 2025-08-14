@@ -1,0 +1,665 @@
+/* ==========================================================================
+   CSS Variables - Design System
+   ========================================================================== */
+
+/* -------------------- Theme Colors -------------------- */
+:root {
+  /* Primary Color Palette */
+  --color-primary: #0e639c;
+  --color-primary-light: #70c0fa;
+  --color-primary-dark: #0c5183;
+
+  /* Background Colors */
+  --background-primary: #ffffff;
+  --background-secondary: #f8f8f8;
+  --background-tertiary: #f1f1f1;
+  --background-selected: rgba(101, 101, 101, 0.06);
+
+  /* Text Colors */
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --text-disabled: #cccccc;
+  --text-on-primary: #ffffff;
+
+  /* Border Colors */
+  --border-color: #e0e0e0;
+  --border-color-focus: #0e639c;
+
+  /* Interactive States */
+  --hover-color: #f5f5f5;
+  --active-color: #e9e9e9;
+  --focus-ring: 0 0 0 2px rgba(14, 99, 156, 0.4);
+
+  /* Status Colors */
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --error-color: #e74c3c;
+
+  /* Element Colors */
+  --primary-button-background: #000000;
+  --primary-button-text: #ffffff;
+  --primary-button-hover: #333333;
+
+  /* Animation & Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+  --animation-curve: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Borders & Radius */
+  --border-width: 1px;
+  --border-width-thick: 2px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+  --border-radius-pill: 9999px;
+  --standard-border: var(--border-width) solid var(--border-color);
+
+  /* Typography */
+  --font-family-ui:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-code: Consolas, Menlo, Monaco, 'Courier New', monospace;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+  /* Scrollbar Variables */
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #c1c1c1;
+  --scrollbar-thumb-hover: #a1a1a1;
+  --scrollbar-width: 8px;
+  --scrollbar-width-thin: 7px;
+
+  /* Z-index layers */
+  --z-dropdown: 100;
+  --z-modal: 1000;
+  --z-tooltip: 500;
+}
+
+/* -------------------- Dark Mode Variables -------------------- */
+.dark-mode {
+  /* Primary Color Palette */
+  --color-primary: #0e639c; /* Kept consistent for branding */
+  --color-primary-light: #1177be;
+  --color-primary-dark: #0c5183;
+
+  /* Background Colors */
+  --background-primary: #1e1e1e;
+  --background-secondary: #252526;
+  --background-tertiary: #2d2d2d;
+  --background-selected: #2a2d2e;
+
+  /* Text Colors */
+  --text-primary: #e8e8e8;
+  --text-secondary: #bbbbbb;
+  --text-disabled: #808080;
+  --text-on-primary: #ffffff;
+
+  /* Border Colors */
+  --border-color: #333333;
+  --border-color-focus: #4d9cd6;
+
+  /* Interactive States */
+  --hover-color: #333333;
+  --active-color: #3d3d3d;
+  --focus-ring: 0 0 0 2px rgba(77, 156, 214, 0.4);
+
+  /* Element Colors */
+  --primary-button-background: #0e639c;
+  --primary-button-text: #ffffff;
+  --primary-button-hover: #1177be;
+
+  /* Status Colors (kept consistent) */
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --error-color: #e74c3c;
+
+  /* Shadows (adjusted for dark mode) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  /* Scrollbar Variables */
+  --scrollbar-track: #1e1e1e;
+  --scrollbar-thumb: #424242;
+  --scrollbar-thumb-hover: #4f4f4f;
+}
+
+/* ==========================================================================
+   Global Resets & Base Styles
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-ui);
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden; /* Prevent body scroll, manage scrolling within components */
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Layout Structure (App Container, Header, Main Content, Sidebar, Content Area)
+   ========================================================================== */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  -webkit-transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  -moz-transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  -ms-transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  -o-transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* -------------------- Main Content Area -------------------- */
+.main-content {
+  display: flex;
+  flex: 1; /* Take remaining vertical space */
+  overflow: hidden; /* Crucial for child scrolling */
+  height: calc(100% - 73px); /* Adjust based on actual header height */
+}
+
+/* Fix label alignment if needed */
+label {
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Scrollbar Styling
+   ========================================================================== */
+
+/* -------------------- Webkit Browsers (Chrome, Safari, Edge) -------------------- */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 8px;
+  /* Create inset effect */
+  border: 2px solid var(--scrollbar-track);
+  background-clip: padding-box; /* Clip background to padding box */
+  transition:
+    background-color 0.2s ease,
+    border-width 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  border: 2px solid var(--scrollbar-track); /* Keep border consistent */
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track); /* Match track background */
+}
+
+/* -------------------- Firefox -------------------- */
+/* Apply scrollbar styles globally or to specific scrollable elements */
+* {
+  scrollbar-width: auto; /* Or 'auto' or 'none' */
+}
+
+/* -------------------- Thin Scrollbars for Specific Areas -------------------- */
+.file-tree::-webkit-scrollbar,
+.file-list::-webkit-scrollbar,
+textarea::-webkit-scrollbar {
+  width: var(--scrollbar-width-thin);
+}
+
+.file-tree::-webkit-scrollbar-thumb,
+.file-list::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb {
+  border-width: 0px; /* Adjust border for thinner scrollbar */
+}
+
+/* ==========================================================================
+   Dark Mode Overrides
+   ========================================================================== */
+
+/* NOTE: Other dark mode overrides are now moved to within each related corresponding .css */
+
+/* Apply dark mode variables (already defined in .dark-mode selector) */
+
+/* Scrollbar overrides for dark mode (Webkit) */
+.dark-mode ::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-color: var(--scrollbar-track);
+  /* Optional: Add subtle inner shadow for depth */
+  /* box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05); */
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  border-color: var(--scrollbar-track);
+  /* box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1); */
+}
+
+.dark-mode ::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+
+/* ==========================================================================
+   Animations and Transitions
+   ========================================================================== */
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide in from top animation */
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Slide in from bottom animation */
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Scale in animation */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Apply animations to elements */
+.file-card {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.sidebar {
+  animation: slideInFromLeft 0.3s ease-out;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-20px);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Modal animation */
+.ignore-patterns-container {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.ignore-patterns-modal {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Success flash */
+.success-flash {
+  animation: flash-success 0.5s ease-out;
+}
+
+@keyframes flash-success {
+  0% {
+    background-color: var(--success-color);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* ==========================================================================
+   Enhanced Component Animations
+   ========================================================================== */
+
+/* Button hover state with better transition */
+button {
+  transition: all 0.2s var(--animation-curve);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Add ripple effect to buttons */
+button:not(.text-button):active::after {
+  transform: scale(0);
+  opacity: 0.2;
+  transition: 0s;
+}
+
+/* File card hover effect */
+.file-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.file-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Smooth transition for tree items */
+.tree-item {
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.tree-item-toggle svg {
+  transition: transform 0.2s var(--animation-curve);
+}
+
+/* Smooth fade-in for search clear button */
+.search-clear-btn {
+  opacity: 0.7;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.search-clear-btn:hover {
+  background-color: var(--hover-color);
+  opacity: 1;
+  transform: translateY(-50%); /* Keep the same transform as the non-hover state */
+}
+
+/* Checkbox smooth transition */
+input[type='checkbox'] {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input[type='checkbox']:checked::after {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Animated loading spinner */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Theme transition */
+body {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Make modal transitions smoother */
+.ignore-patterns-modal-overlay {
+  transition: opacity 0.2s ease;
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+/* Small screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 250px;
+  }
+
+  .file-list {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .header h1 {
+    font-size: 18px;
+  }
+
+  .selected-folder {
+    max-width: 150px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .file-list {
+    grid-template-columns: 1fr; /* Stack cards on very small screens */
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .folder-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .selected-folder {
+    max-width: none;
+    width: 100%;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --focus-ring: 0 0 0 3px rgba(0, 0, 0, 0.8);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark-mode {
+    --focus-ring: 0 0 0 3px rgba(255, 255, 255, 0.8);
+  }
+
+  input:focus-visible,
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* -------------------- Lucide React Icon Integration -------------------- */
+/* Ensure proper sizing for Lucide icons */
+svg.lucide {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.75;
+  vertical-align: middle;
+}
+
+/* Size variations */
+svg.lucide-sm {
+  width: 16px;
+  height: 16px;
+}
+
+svg.lucide-lg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Fix for checkbox with Lucide icon if used */
+.tree-item-checkbox svg.lucide {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5;
+  color: var(--text-on-primary);
+}
+
+/* List Of Removed Styles Separated from index.css */
+
+/* ==========================================================================
+   Base Element Styling (Buttons, Inputs)
+   ========================================================================== */
+
+/* ==========================================================================
+   Layout Structure (App Container, Header, Main Content, Sidebar, Content Area)
+   ========================================================================== */
+
+/* -------------------- Header -------------------- */
+
+/* -------------------- Theme Toggle (in Header) -------------------- */
+
+/* -------------------- Sidebar -------------------- */
+
+/* -------------------- Content Area (Right Pane) -------------------- */
+
+/* ==========================================================================
+   Component Styles
+   ========================================================================== */
+
+/* -------------------- Sidebar Resize Handle -------------------- */
+
+/* -------------------- File Tree (in Sidebar) -------------------- */
+
+/* -------------------- File Tree (in Sidebar - File badges (For Binary Files) -------------------- */
+
+/* ==========================================================================
+   Ignore List Modal
+   ========================================================================== */
+
+/* -------------------- File List (in Content Area) -------------------- */
+
+/* -------------------- File Card (in File List) -------------------- */
+
+/* -------------------- Search Bar (in Sidebar) -------------------- */
+
+/* -------------------- Sort Dropdown (in Content Header) -------------------- */
+
+/* -------------------- User Instructions (in Content Area) -------------------- */
+
+/* -------------------- Copy Button Area (in Content Area) -------------------- */
+
+/* -------------------- Processing Indicator -------------------- */
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+/* ==========================================================================
+   File Preview Modal Styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Update Modal Styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Task Type Selector Styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Custom Task Type Modal Styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Worskpace Manager Styles
+   ========================================================================== */

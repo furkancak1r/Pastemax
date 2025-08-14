@@ -1,0 +1,180 @@
+/* -------------------- Sidebar -------------------- */
+.sidebar {
+  width: 300px;
+  min-width: 200px;
+  max-width: 500px;
+  height: 100%; /* Fill parent height */
+  display: flex;
+  flex-direction: column;
+  border-right: var(--standard-border);
+  overflow: hidden; /* Manage internal scrolling */
+  background-color: var(--background-secondary);
+  position: relative; /* For resize handle positioning */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+}
+
+.sidebar-header {
+  background-color: var(--background-secondary);
+  flex-shrink: 0; /* Prevent header from shrinking */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--space-lg);
+}
+
+.sidebar-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  padding: var(--space-sm) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-workspace-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  background-color: #e0f2fe;
+  color: #0369a1;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 0 var(--space-lg) 8px;
+}
+
+.dark-mode .sidebar-workspace-badge {
+  background-color: #0c4a6e;
+  color: #7dd3fc;
+}
+
+.sidebar-folder-path {
+  font-size: 12px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0px var(--space-lg);
+}
+
+.sidebar-search {
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: var(--standard-border);
+  background-color: var(--background-secondary);
+  flex-shrink: 0;
+}
+
+.sidebar-actions {
+  display: flex;
+  padding: var(--space-sm) var(--space-lg);
+  gap: var(--space-lg);
+  border-bottom: var(--standard-border);
+  background-color: var(--background-secondary);
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.sidebar-action-btn {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border: var(--standard-border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0;
+}
+
+.sidebar-action-btn:hover {
+  background-color: var(--color-primary); /* Uses existing primary color for hover */
+  color: var(--text-on-primary); /* Uses existing text on primary for hover */
+}
+
+/* --- Selection Sets --- */
+.selection-set-list {
+  padding: 0 var(--space-lg) var(--space-md);
+  border-bottom: var(--standard-border);
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.selection-set-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm);
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.selection-set-item:hover {
+  background-color: var(--hover-color);
+}
+
+.selection-set-name {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selection-set-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.selection-set-actions button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.selection-set-actions button:hover {
+  background-color: var(--background-primary);
+  color: var(--color-primary);
+  transform: none;
+  box-shadow: none;
+}
+
+.selection-set-empty {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  padding: var(--space-md);
+  text-align: center;
+  font-style: italic;
+}
+
+/* -------------------- Sidebar Resize Handle -------------------- */
+.sidebar-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -4px;
+  bottom: 0;
+  width: 6px;
+  cursor: ew-resize;
+  z-index: 10;
+  background-color: transparent;
+  will-change: transform; /* Optimize for performance */
+}
+
+.sidebar-resize-handle:hover {
+  background-color: var(--color-primary);
+  opacity: 0.2;
+}
+.dark-mode .sidebar,
+.dark-mode .sidebar-header,
+.dark-mode .sidebar-search,
+.dark-mode .sidebar-actions,
+.dark-mode .selection-set-list {
+  border-color: var(--border-color);
+}
+  
