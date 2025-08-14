@@ -80,6 +80,12 @@ Herhangi bir plan yapmadan veya varsayımda bulunmadan önce şunları yapmalıs
 </talimatlar>`,
   },
   {
+    id: 'file-list',
+    label: 'FILE_LIST',
+    description: 'Projedeki tüm dosyaların listesini hash formatında verir.',
+    prompt: `burası ile ilgili tüm dosyaları tespit et. Her satırın başında '#' olacak şekilde dosya yolları listesini paylaş. Kod bloğu içinde ver. Genel bilgileri de ekle, örneğin remember, package.json, gemini.md, asla başlık veya açıklama ekleme!`,
+  },
+  {
     id: 'none',
     label: 'None',
     description: '',
@@ -137,4 +143,3 @@ Instructions for the output format:
 - Suggest preventative measures for similar bugs in the future`,
   },
 ];
-  
